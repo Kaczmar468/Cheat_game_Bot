@@ -25,6 +25,10 @@ header > h1 {
 	width: 70%;
 }
 
+.grouper > div {
+	float: left;
+}
+
 footer {
 	text-align: center;
 }
