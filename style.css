@@ -103,7 +103,7 @@ header > h1 {
 }
 
 .player_button{
-	margin: 7px;
+	margin: 0 7px;
 	height: 56px;
 	border: solid;
 	float: right;

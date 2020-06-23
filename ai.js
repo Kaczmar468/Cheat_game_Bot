@@ -12,7 +12,7 @@ var number, cards, check
 var player_cards, thrown_cards 
 
 bot1()
-//example()
+example()
 
 
 function rules_button(){
@@ -117,14 +117,22 @@ function end_game(){
 	$("#before_game").show()
 }
 
+function bot_color_set(){
+	$(".number_of_cards").css({"background-color":bot_color(),"color":"white"})
+	$(".card_rank").css({"background-color":bot_color(),"color":"white"})
+	$(".checking_div").css({"background-color":bot_color(),"color":"white"})
+}
+
 function bot1(){
-	$("body").css({"background-color":"#000033"})
 	bot = 1
+	$("body").css({"background-color":bot_color()})
+	bot_color_set()
 }
 
 function bot2(){
-	$("body").css({"background-color":"#4d0000"})
 	bot = 2
+	$("body").css({"background-color":bot_color()})
+	bot_color_set()
 }
 
 function bot_color(){
@@ -164,6 +172,7 @@ function confirm_check(){
 	$("#turn_cards").show()
 	current_player=(current_player+1)%players_list.length
 	$("#player_name").html(players_list[current_player])
+	$(".checking_div").css({"background-color":bot_color(),"color":"white"})
 }
 
 function all_of_them(){
