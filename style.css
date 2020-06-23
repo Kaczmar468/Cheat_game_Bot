@@ -4,10 +4,11 @@ body {
 	background-color: black;
 	color: white;
 	font-size: 20px;
+	text-align: center;
 }
 
-header {
-	text-align: center;
+legend {
+	text-align: left;
 }
 
 header > h1 {
@@ -35,7 +36,6 @@ header > h1 {
 }
 
 #game_toggle, #player_name, .confirm_frame {
-	text-align: center;
 	font-size: 20px;
 }
 
@@ -43,7 +43,22 @@ header > h1 {
 	cursor: pointer;
 }
 
-.confirm_frame {
+.bot {	
+	width: 45%;
+	border: solid;
+	margin: 10px;
+	cursor: pointer;
+}
+
+#bot1 {
+	float: left;
+}
+
+#bot2 {
+	float: right;
+}
+
+.confirm_frame, #game_toggle {
 	margin-top: 7px;
 }
 
@@ -103,7 +118,6 @@ input[type=text]{
 footer {
 	margin-top: 15px;
 	margin-bottom: 10px;
-	text-align: center;
 }
 
 a {

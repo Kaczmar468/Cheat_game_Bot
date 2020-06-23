@@ -3,11 +3,16 @@ $("#game_end").hide()
 $("#rules").hide()
 $("#player_frame").hide()
 $("#turn_cards").hide()
-$("#rules_button").click(function(){
-	$("#rules").toggle()
-});
-
 var players = 0;
+var bot = 1;
+
+bot1()
+example()
+
+
+function rules_button(){
+	$("#rules").toggle()
+}
 
 function add_player(){
 	var nick = $("#input").val();
@@ -33,7 +38,6 @@ function example(){
 	add_player()
 	start_game()
 }
-example()
 
 
 function get_players(){
@@ -46,7 +50,7 @@ function get_players(){
 }
 
 function confirm_cards(){
-	
+
 }
 
 function start_game(){
@@ -58,5 +62,12 @@ function start_game(){
 }
 
 function end_game(){
+}
 
+function bot1(){
+	$("body").css({"background-color":"#000033"})
+}
+
+function bot2(){
+	$("body").css({"background-color":"#4d0000"})
 }

@@ -14,7 +14,7 @@
 <body>
 	<header>
 		<h1>CHEAT BOT</h1>
-		<p id="rules_button">>> Cheat card game rules <<</p>
+		<p id="rules_button" onclick="rules_button()">>> Cheat card game rules <<</p>
 		<div id="rules">
 			<p>Game rules are lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque convallis, nisl ac condimentum ullamcorper, turpis eros sollicitudin ante, sit amet ullamcorper eros nulla id neque. Morbi leo libero, suscipit ac nulla id, laoreet lacinia ex. Nullam justo augue, dignissim non venenatis vitae, hendrerit interdum justo. Nullam facilisis semper dictum. In imperdiet ipsum erat, ut posuere eros ullamcorper ac. Vestibulum tincidunt quam massa, vel cursus orci posuere a. Quisque et felis non arcu volutpat aliquet eu eget libero. Vivamus egestas mollis faucibus. Fusce tincidunt non ipsum eget vulputate. Sed convallis egestas ante, maximus viverra nulla mollis et.</p>
 
@@ -27,6 +27,18 @@
 	</header>
 	<main>
 		<fieldset id="game_console">
+			<fieldset id="bots">
+				<legend>Bots</legend>
+				<div id="bot1" class="bot" onclick="bot1()">
+					<p>PEACEFUL</p>
+					<p>BOT</p>
+				</div>
+				<div id="bot2" class="bot" onclick="bot2()">
+					<p>TRY HARD</p>
+					<p>BOT</p>
+				</div>
+				<div class="clear_both"></div>
+			</fieldset>
 			<legend>Game console</legend>
 			<fieldset id="game_toggle">
 				<p id="game_end" onclick="end_game()">END GAME</p>
