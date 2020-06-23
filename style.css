@@ -34,12 +34,20 @@ header > h1 {
 	margin-right: auto;
 }
 
-#game_toggle, #player_name {
+#game_toggle, #player_name, .confirm_frame {
 	text-align: center;
 	font-size: 20px;
 }
 
-#game_toggle {
+#game_start, #game_end {
+	cursor: pointer;
+}
+
+.confirm_frame {
+	margin-top: 7px;
+}
+
+.confirm_button {
 	cursor: pointer;
 }
 

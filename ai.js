@@ -2,10 +2,9 @@
 $("#game_end").hide()
 $("#rules").hide()
 $("#player_frame").hide()
-$("#number_frame").hide()
-$("#rank_frame").hide()
+$("#turn_cards").hide()
 $("#rules_button").click(function(){
-	$("#rules").toggle();
+	$("#rules").toggle()
 });
 
 var players = 0;
@@ -14,10 +13,10 @@ function add_player(){
 	var nick = $("#input").val();
 	console.log(nick)
 	$("#input").val("")
-	var before_nick = "<div class='player' id='player"+ players +"'><p class='nick'>";
+	var before_nick = "<div class='player' id='player"+ players +"'><p id='player"+ players +"nick' class='nick'>";
 	var after_nick = "</p><button class='player_button' onclick='remove_player(player"+players+")'>Remove</button><div class='clear_both'></div></div>";
 	$("#players").append(before_nick+nick+after_nick)
-	players++;
+	players++
 }
 
 function remove_player(playerid){
@@ -32,7 +31,32 @@ function example(){
 	add_player()
 	$("#input").val("Ala")
 	add_player()
+	start_game()
 }
-example();
+example()
 
-//console.log(5 * 6);
+
+function get_players(){
+	var players_list=[]
+	$(".player").each(function(){
+		 console.log(this.id)
+		 players_list.push($("#"+this.id+"nick").html())
+	})
+	return players_list
+}
+
+function confirm_cards(){
+	
+}
+
+function start_game(){
+	$("#before_game").hide()
+	$("#player_frame").show()
+	$("#turn_cards").show()
+	var players_list = get_players()
+	$("#player_name").html(players_list[0])
+}
+
+function end_game(){
+
+}

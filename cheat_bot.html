@@ -29,49 +29,54 @@
 		<fieldset id="game_console">
 			<legend>Game console</legend>
 			<fieldset id="game_toggle">
-				<p id="game_end">END GAME</p>
-				<p id="game_start">START GAME</p>
+				<p id="game_end" onclick="end_game()">END GAME</p>
+				<p id="game_start" onclick="start_game()">START GAME</p>
 	  		</fieldset>
 	  		<div id="game_controls">
 				<fieldset id="player_frame">
 					<legend>Player</legend>
-					<p id="player_name">ROMA</p>
+					<p id="player_name"></p>
 		  		</fieldset>
-				<fieldset id="number_frame">
-		  			<legend>Number of cards</legend>
-		  			<div class="grouper">
-			  			<div class="box_button">1</div>
-			  			<div class="box_button">2</div>
-			  			<div class="box_button">3</div>
-			  			<div class="box_button">4</div>
-			  			<div class="clear_both"></div>
-		  			</div>
-		  		</fieldset>
-				<fieldset id="rank_frame">
-		  			<legend>Card rank</legend>
-		  			<div class="grouper">
-			  			<div class="box_button">2</div>
-			  			<div class="box_button">3</div>
-			  			<div class="box_button">4</div>
-			  			<div class="box_button">5</div>
-			  			<div class="box_button">6</div>
-		  				<div class="clear_both"></div>
-		  			</div>
-		  			<div class="grouper">
-			  			<div class="box_button">7</div>
-			  			<div class="box_button">8</div>
-			  			<div class="box_button">9</div>
-			  			<div class="box_button">10</div>
-		  				<div class="clear_both"></div>
-		  			</div>
-		  			<div class="grouper">
-			  			<div class="box_button">J</div>
-			  			<div class="box_button">Q</div>
-			  			<div class="box_button">K</div>
-			  			<div class="box_button">A</div>
-		  				<div class="clear_both"></div>
-		  			</div>
-		  		</fieldset>
+		  		<div id="turn_cards">
+					<fieldset id="number_frame">
+			  			<legend>Number of cards</legend>
+			  			<div class="grouper">
+				  			<div class="box_button">1</div>
+				  			<div class="box_button">2</div>
+				  			<div class="box_button">3</div>
+				  			<div class="box_button">4</div>
+				  			<div class="clear_both"></div>
+			  			</div>
+			  		</fieldset>
+					<fieldset id="rank_frame">
+			  			<legend>Card rank</legend>
+			  			<div class="grouper">
+				  			<div class="box_button">2</div>
+				  			<div class="box_button">3</div>
+				  			<div class="box_button">4</div>
+				  			<div class="box_button">5</div>
+				  			<div class="box_button">6</div>
+			  				<div class="clear_both"></div>
+			  			</div>
+			  			<div class="grouper">
+				  			<div class="box_button">7</div>
+				  			<div class="box_button">8</div>
+				  			<div class="box_button">9</div>
+				  			<div class="box_button">10</div>
+			  				<div class="clear_both"></div>
+			  			</div>
+			  			<div class="grouper">
+				  			<div class="box_button">J</div>
+				  			<div class="box_button">Q</div>
+				  			<div class="box_button">K</div>
+				  			<div class="box_button">A</div>
+			  				<div class="clear_both"></div>
+			  			</div>
+			  		</fieldset>
+			  		<fieldset id="confirm_cards" class="confirm_frame">
+			  			<p class="confirm_button" onclick="confirm_cards()">CONFIRM</p>
+			  		</fieldset>
+			  	</div>
 		  	</div>
 	  		<div id="before_game">
 	  			<div id="players"></div>
