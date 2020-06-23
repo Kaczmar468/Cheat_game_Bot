@@ -12,7 +12,7 @@ var number, cards, check
 var player_cards, thrown_cards 
 
 bot1()
-example()
+//example()
 
 
 function rules_button(){
@@ -20,7 +20,7 @@ function rules_button(){
 }
 
 function add_player(){
-	var nick = $("#input").val();
+	var nick = $("#input").val().trim();
 	if (get_players().includes(nick))
 		return
 	console.log(nick)
@@ -165,6 +165,7 @@ function confirm_cards(){
 	if (players_list[current_player] == "You"){
 		player_cards[rank]-=number
 	}
+	game_turn()
 }
 
 function confirm_check(){
@@ -189,3 +190,6 @@ function checking_inp(num){
 	console.log(check)
 }
 
+function game_turn(){
+
+}
