@@ -2,11 +2,14 @@ $("#game_end").hide()
 $("#rules").hide()
 $("#player_frame").hide()
 $("#turn_cards").hide()
+$("#adding_cards").hide()
 $("#turn_check").hide()
+$("#your_cards_frame").hide()
 
-var players = 0;
+var players_divs = 1, cards_divs = 0, current_player = 0, players_list;
 var bot = 1;
 var number, cards
+var player_cards, thrown_cards 
 
 bot1()
 example()
@@ -20,15 +23,40 @@ function add_player(){
 	var nick = $("#input").val();
 	console.log(nick)
 	$("#input").val("")
-	var before_nick = "<div class='player' id='player"+ players +"'><p id='player"+ players +"nick' class='nick'>";
-	var after_nick = "</p><button class='player_button' onclick='remove_player(player"+players+")'>Remove</button><div class='clear_both'></div></div>";
-	$("#players").append(before_nick+nick+after_nick)
-	players++
+	var before_content = "<div class='player' id='player" + players_divs + "'><p id='player" + players_divs + "nick' class='nick'>";
+	var button_up = "<button class='player_button' onclick='move_up(player" + players_divs + ")'>Up</button>";
+	var button_down = "<button class='player_button' onclick='move_down(player" + players_divs + ")'>Down</button>";
+	var button_remove = "<button class='player_button' onclick='remove_player(player" + players_divs + ")'>Remove</button>"
+	var after_content = "<div class='clear_both'></div></div>";
+	$("#players").append(before_content + nick + "</p>" + button_remove + button_down + button_up + after_content)
+	players_divs++
+}
+
+function add_cards(){
+	var before_content = "<div class='your_cards' id='cards" + cards_divs + "'><p id='cards" + cards_divs + "text' class='nick'>";
+	var after_content = "</p><button class='player_button' onclick='remove_cards(cards" + cards_divs + ")'>Remove</button><div class='clear_both'></div></div>";
+	$("#your_cards").append(before_content + number + " cards of rank " + rank + after_content)
+	cards_divs++
+	player_cards[rank]+=parseInt(number)
+	console.log(player_cards)
+}
+
+function move_up(playerid){
+	$(playerid).insertBefore($(playerid).prev())
+}
+
+function move_down(playerid){
+	$(playerid).insertAfter($(playerid).next())
 }
 
 function remove_player(playerid){
 	//console.log(playerid)
 	$(playerid).remove()
+}
+
+function remove_cards(cardsid){
+	//console.log(playerid)
+	$(cardsid).remove()
 }
 
 function example(){
@@ -39,6 +67,14 @@ function example(){
 	$("#input").val("Ala")
 	add_player()
 	start_game()
+	player_cards[3]=2
+	player_cards[7]=3
+	player_cards["K"]=3
+	player_cards[8]=3
+	all_of_them()
+	number = 2
+	rank = 3
+	confirm_cards()
 }
 
 
@@ -57,11 +93,26 @@ function start_game(){
 	$("#game_end").show()
 	$("#player_frame").show()
 	$("#turn_cards").show()
-	var players_list = get_players()
-	$("#player_name").html(players_list[0])
+	players_list = get_players()
+	current_player = 0
+	$("#player_name").html(players_list[current_player])
+	$("#adding_cards").show()
+	$("#confirm_cards").hide()
+	$("#player_frame").hide()
+	$("#your_cards_frame").show()
+	$("#your_cards").html("")
+	player_cards = {2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, "J": 0, "Q": 0, "K": 0, "A": 0}
+	thrown_cards = {2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, "J": 0, "Q": 0, "K": 0, "A": 0}
 }
 
 function end_game(){
+	$("#turn_cards").hide()
+	$("#turn_check").hide()
+	$("#player_frame").hide()
+	$("#your_cards_frame").hide()
+	$("#game_end").hide()
+	$("#game_start").show()
+	$("#before_game").show()
 }
 
 function bot1(){
@@ -98,10 +149,23 @@ function card_rank(){
 function confirm_cards(){
 	$("#turn_cards").hide()
 	$("#turn_check").show()
-
+	$(".number_of_cards").css({"background-color":bot_color(),"color":"white"})
+	$(".card_rank").css({"background-color":bot_color(),"color":"white"})
+	thrown_cards[rank]+=number
+	if (players_list[current_player] == "You"){
+		player_cards[rank]-=number
+	}
 }
 
 function confirm_check(){
 	$("#turn_check").hide()
 
 }
+
+function all_of_them(){
+	$("#confirm_cards").show()
+	$("#player_frame").show()
+	$("#adding_cards").hide()
+	$("#your_cards_frame").hide()
+}
+

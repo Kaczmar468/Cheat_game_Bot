@@ -45,6 +45,10 @@
 				<p id="game_start" onclick="start_game()">START GAME</p>
 	  		</fieldset>
 	  		<div id="game_controls">
+				<fieldset id="your_cards_frame">
+					<legend>Your cards</legend>
+					<div id="your_cards"></p>
+		  		</fieldset>
 				<fieldset id="player_frame">
 					<legend>Player</legend>
 					<p id="player_name"></p>
@@ -86,8 +90,17 @@
 			  			</div>
 			  		</fieldset>
 			  		<fieldset id="confirm_cards" class="confirm_frame">
-			  			<p class="confirm_button" onclick="confirm_cards()">CONFIRM</p>
+			  			<p class="confirm_button" onclick="confirm_cards()">CONFIRM PLAYER'S DECLARATION</p>
 			  		</fieldset>
+			  		<fieldset id="adding_cards">
+				  		<legend>Add your cards</legend>
+				  		<fieldset id="add_cards" class="confirm_frame">
+				  			<p class="confirm_button" onclick="add_cards()">ADD CARD(S) TO YOUR HAND</p>
+				  		</fieldset>
+				  		<fieldset id="confirm_add_cards" class="confirm_frame">
+				  			<p class="confirm_button" onclick="all_of_them()">THAT'S ALL OF THEM</p>
+				  		</fieldset>
+				  	</fieldset>
 			  	</div>
 			  	<div id="turn_check">
 			  		<fieldset id="confirm_check" class="confirm_frame">
@@ -96,7 +109,15 @@
 			  	</div>
 		  	</div>
 	  		<div id="before_game">
-	  			<div id="players"></div>
+	  			<div id="players">
+	  				<div class="player" id="player0">
+	  					<p id="player0nick" class="nick">You</p>
+	  					<button class="player_button">It's you</button>
+	  					<button class='player_button' onclick='move_down(player0)'>Down</button>
+	  					<button class='player_button' onclick='move_up(player0)'>Up</button>
+	  					<div class="clear_both"></div>
+	  				</div>
+	  			</div>
 				<fieldset id="add_player_frame">
 		  			<legend>Add player</legend>
 					<input type="text" id="input" placeholder="Nickname">
