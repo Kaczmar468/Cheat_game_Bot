@@ -8,11 +8,11 @@ $("#your_cards_frame").hide()
 
 var players_divs = 1, cards_divs = 0, current_player = 0, players_list;
 var bot = 1;
-var number, cards
+var number, cards, check
 var player_cards, thrown_cards 
 
 bot1()
-example()
+//example()
 
 
 function rules_button(){
@@ -26,9 +26,9 @@ function add_player(){
 	console.log(nick)
 	$("#input").val("")
 	var before_content = "<div class='player' id='player" + players_divs + "'><p id='player" + players_divs + "nick' class='nick'>";
-	var button_up = "<button class='player_button' onclick='move_up(player" + players_divs + ")'>Up</button>";
-	var button_down = "<button class='player_button' onclick='move_down(player" + players_divs + ")'>Down</button>";
-	var button_remove = "<button class='player_button' onclick='remove_player(player" + players_divs + ")'>Remove</button>"
+	var button_up = "<div class='player_button' onclick='move_up(player" + players_divs + ")'><p>Up</p></div>";
+	var button_down = "<div class='player_button' onclick='move_down(player" + players_divs + ")'><p>Down</p></div>";
+	var button_remove = "<div class='player_button' onclick='remove_player(player" + players_divs + ")'><p>Remove</p></div>"
 	var after_content = "<div class='clear_both'></div></div>";
 	$("#players").append(before_content + nick + "</p>" + button_remove + button_down + button_up + after_content)
 	players_divs++
@@ -161,7 +161,9 @@ function confirm_cards(){
 
 function confirm_check(){
 	$("#turn_check").hide()
-
+	$("#turn_cards").show()
+	current_player=(current_player+1)%players_list.length
+	$("#player_name").html(players_list[current_player])
 }
 
 function all_of_them(){
@@ -169,5 +171,12 @@ function all_of_them(){
 	$("#player_frame").show()
 	$("#adding_cards").hide()
 	$("#your_cards_frame").hide()
+}
+
+function checking_inp(num){
+	$(".checking_div").css({"background-color":bot_color(),"color":"white"})
+	$(event.target).css({"background-color":"white","color":"black"})
+	check = num
+	console.log(check)
 }
 
