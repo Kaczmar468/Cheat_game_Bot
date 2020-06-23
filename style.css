@@ -52,10 +52,12 @@ header > h1 {
 
 #bot1 {
 	float: left;
+	background-color: #000033;
 }
 
 #bot2 {
 	float: right;
+	background-color: #4d0000;
 }
 
 .confirm_frame, #game_toggle {
@@ -63,6 +65,10 @@ header > h1 {
 }
 
 .confirm_button {
+	cursor: pointer;
+}
+
+.box_button {
 	cursor: pointer;
 }
 
