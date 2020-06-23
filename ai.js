@@ -21,6 +21,8 @@ function rules_button(){
 
 function add_player(){
 	var nick = $("#input").val();
+	if (get_players().includes(nick))
+		return
 	console.log(nick)
 	$("#input").val("")
 	var before_content = "<div class='player' id='player" + players_divs + "'><p id='player" + players_divs + "nick' class='nick'>";
