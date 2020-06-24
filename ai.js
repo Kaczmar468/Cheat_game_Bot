@@ -8,7 +8,7 @@ $("#your_cards_frame").hide()
 
 var players_divs = 1, cards_divs = 0, current_player = 0, players_list;
 var bot = 1;
-var number, cards, check
+var number = 0, rank = 0, cards, check
 var player_cards, thrown_cards 
 
 bot1()
@@ -21,6 +21,8 @@ function rules_button(){
 
 function add_player(){
 	var nick = $("#input").val().trim();
+	if (nick == "")
+		return
 	if (get_players().includes(nick))
 		return
 	console.log(nick)
@@ -36,10 +38,10 @@ function add_player(){
 
 function add_cards(){
 	var before_content = "<div class='your_cards' id='cards" + cards_divs + "'><p id='cards" + cards_divs + "text' class='nick'>";
-	var after_content = "</p><button class='player_button' onclick='remove_cards(cards" + cards_divs + ")'>Remove</button><div class='clear_both'></div></div>";
+	var after_content = "</p><div class='player_button' onclick='remove_cards(cards" + cards_divs + ")'><p>Remove</p></div><div class='clear_both'></div></div>";
 	$("#your_cards").append(before_content + number + " cards of rank " + rank + after_content)
 	cards_divs++
-	player_cards[rank]+=parseInt(number)
+	player_cards[rank]+=number
 	console.log(player_cards)
 }
 
@@ -145,7 +147,7 @@ function bot_color(){
 function number_of_cards(){
 	$(".number_of_cards").css({"background-color":bot_color(),"color":"white"})
 	$(event.target).css({"background-color":"white","color":"black"})
-	number = $(event.target).html()
+	number = parseInt($(event.target).html())
 	console.log(number)
 }
 
