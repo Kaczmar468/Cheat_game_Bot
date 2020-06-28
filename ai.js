@@ -128,7 +128,8 @@ function start_game(){
 			players_info[ players_list[ i ] ] = {
 				"turns": 0,
 				"times_checked": 0,
-				"times_lied": 0}
+				"times_lied": 0
+			}
 	}else{
 		var input_data = $("#input_info").val().split(";")
 		for (var piece of input_data){
@@ -147,7 +148,8 @@ function start_game(){
 				players_info[ players_list[ i ] ] = {
 					"turns": 0,
 					"times_checked": 0,
-					"times_lied": 0}
+					"times_lied": 0
+				}
 	}
 	prev_rank = 2
 	check = stack_height = initial_amount = 0
@@ -217,6 +219,7 @@ function confirm_cards(){
 	$(".number_of_cards").css({"background-color":bot_color(),"color":"white"})
 	$(".card_rank").css({"background-color":bot_color(),"color":"white"})
 	thrown_cards[rank]+=number
+	stack_height += number
 	game_turn()
 	prev_rank = rank
 }
@@ -330,16 +333,31 @@ function lowest_possible(){
 
 function game_turn(){
 	if (players_list[current_player] == "You"){
-		var thrown_rank = lowest_possible()
+		var thrown_rank = lowest_possible(), lie = 0
 		var thrown_number = player_cards[thrown_rank]
-		if (rank_to_num(thrown_rank) < rank_to_num(prev_rank))
+		if (rank_to_num(thrown_rank) < rank_to_num(prev_rank)){
 			thrown_number = Math.min(thrown_number, 2)
+			lie = 1
+		}
 		// THROWNIG
 		if (bot == 1){
 			$("#bot_log").html("You should throw " + thrown_number + " cards of rank " + thrown_rank)
-			player_cards[thrown_rank]-=thrown_number
+			player_cards[thrown_rank] -= thrown_number
+			stack_height += thrown_number
 		}else{
-			$("#bot_log").html("You should throw XD cards of rank LOL")
+			if (lie == 0 && player_cards[ num_to_rank(rank_to_num(thrown_rank) + 1) ] > thrown_number){
+				thrown_rank = num_to_rank(rank_to_num(thrown_rank) + 1)
+				thrown_number = player_cards[thrown_rank]
+			}
+			if (lie == 1 && thrown_number == 1 && (Math.random() > 0.55) || stack_height < 10)
+				for (var i = rank_to_num(thrown_rank); i <= 14; i++)
+					if (player_cards[ num_to_rank(i) ] > 0){
+						$("#bot_log").html("You should throw 1 card of rank " + thrown_rank + " and 1 card of rank " + num_to_rank(i))
+						player_cards[ thrown_rank ] -= 1
+						player_cards[ num_to_rank(i) ] -= 1
+						return
+					}
+			$("#bot_log").html("You should throw " + thrown_number + " cards of rank " + thrown_rank)
 		}
 	}else{
 		// CHECKING
