@@ -6,13 +6,13 @@ $("#adding_cards").hide()
 $("#turn_check").hide()
 $("#your_cards_frame").hide()
 
-var players_divs = 1, cards_divs = 0, current_player = 0, players_list;
-var bot = 1;
-var number = 0, rank = 0, cards, check = 0, prev_rank = 2;
+var players_divs = 1, cards_divs = 0, current_player = 0, players_list
+var bot = 1
+var number = 0, rank = 0, cards, check = 0, prev_rank = 2, stack_height = 0, initial_amount = 0
 var player_cards, thrown_cards, players_info = new Object(), player_board_info
 
 bot1()
-//example()
+example()
 
 
 function rules_button(){
@@ -55,12 +55,10 @@ function move_down(playerid){
 }
 
 function remove_player(playerid){
-	//console.log(playerid)
 	$(playerid).remove()
 }
 
 function remove_cards(cardsid, r_rank, r_number){
-	//console.log(playerid)
 	$(cardsid).remove()
 	player_cards[r_rank] -= r_number
 	player_board_info[r_rank] -= r_number
@@ -152,7 +150,7 @@ function start_game(){
 					"times_lied": 0}
 	}
 	prev_rank = 2
-	check = 0
+	check = stack_height = initial_amount = 0
 }
 
 function end_game(){
@@ -229,6 +227,7 @@ function confirm_check(){
 	if (check >= 1)
 		players_info[ players_list[ current_player ] ][ "times_checked" ] += 1
 	if (check == 2){
+		stack_height = 0
 		players_info[ players_list[ current_player ] ][ "times_lied" ] += 1
 		prev_rank = 2
 		if (players_list[current_player] == "You"){
@@ -262,6 +261,10 @@ function all_of_them(){
 	$("#your_cards").html("")
 	$(".number_of_cards").css({"background-color":bot_color(),"color":"white"})
 	$(".card_rank").css({"background-color":bot_color(),"color":"white"})
+	if (check == 0){
+		for (const [key, value] of Object.entries(player_cards))
+				initial_amount += value
+	}
 	if (players_list[current_player] == "You"){
 		if (check == 0){
 			$("#turn_cards").hide()
@@ -340,6 +343,17 @@ function game_turn(){
 		}
 	}else{
 		// CHECKING
-		$("#bot_log").html("You should check the player")
+		// OBVIOUS LIE
+		if (number + player_board_info[rank] > 4){
+			$("#bot_log").html(players_list[current_player] + " lies for 100%")
+			return		
+		}
+		if(bot == 1){
+			$("#bot_log").html("You shouldn't check " + players_list[current_player])
+			return
+		}
+		
+		$("#bot_log").html(players_list[current_player] + " lies for 50%")
+		
 	}
 }
