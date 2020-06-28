@@ -147,6 +147,15 @@ function end_game(){
 	$("#game_end").hide()
 	$("#game_start").show()
 	$("#before_game").show()
+	var players_info_formatted = ""
+	for (const [player, info] of Object.entries(players_info)){
+		players_info_formatted += player + ":" 
+		for (const [key, value] of Object.entries(info)){
+			players_info_formatted += key + "." + value + "," 
+		}
+		players_info_formatted += ";"
+	}
+	$("#input_info").val(players_info_formatted)
 }
 
 function bot_color_set(){
@@ -305,7 +314,7 @@ function game_turn(){
 		var thrown_rank = lowest_possible()
 		var thrown_number = player_cards[thrown_rank]
 		if (rank_to_num(thrown_rank) < rank_to_num(prev_rank))
-			thrown_number = min(thrown_number, 2)
+			thrown_number = Math.min(thrown_number, 2)
 		// THROWNIG
 		if (bot == 1){
 			$("#bot_log").html("You should throw " + thrown_number + " cards of rank " + thrown_rank)
