@@ -14,7 +14,6 @@ var player_cards, thrown_cards, players_info = new Object(), player_board_info
 bot1()
 example()
 
-
 function rules_button(){
 	$("#rules").toggle()
 }
@@ -230,6 +229,7 @@ function confirm_check(){
 	if (check >= 1)
 		players_info[ players_list[ current_player ] ][ "times_checked" ] += 1
 	if (check == 2){
+		thrown_cards = {2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, "J": 0, "Q": 0, "K": 0, "A": 0}
 		stack_height = 0
 		players_info[ players_list[ current_player ] ][ "times_lied" ] += 1
 		prev_rank = 2
@@ -339,6 +339,7 @@ function game_turn(){
 			thrown_number = Math.min(thrown_number, 2)
 			lie = 1
 		}
+		console.log(thrown_rank, thrown_number, lie)
 		// THROWNIG
 		if (bot == 1){
 			$("#bot_log").html("You should throw " + thrown_number + " cards of rank " + thrown_rank)
@@ -349,14 +350,16 @@ function game_turn(){
 				thrown_rank = num_to_rank(rank_to_num(thrown_rank) + 1)
 				thrown_number = player_cards[thrown_rank]
 			}
-			if (lie == 1 && thrown_number == 1 && (Math.random() > 0.55) || stack_height < 10)
-				for (var i = rank_to_num(thrown_rank); i <= 14; i++)
+			if (lie == 1 && thrown_number == 1 && (Math.random() > 0.55 || stack_height < 10)){
+				for (var i = rank_to_num(thrown_rank) + 1; i <= 14; i++)
 					if (player_cards[ num_to_rank(i) ] > 0){
 						$("#bot_log").html("You should throw 1 card of rank " + thrown_rank + " and 1 card of rank " + num_to_rank(i))
 						player_cards[ thrown_rank ] -= 1
 						player_cards[ num_to_rank(i) ] -= 1
 						return
 					}
+			}
+			player_cards[thrown_rank] -= thrown_number
 			$("#bot_log").html("You should throw " + thrown_number + " cards of rank " + thrown_rank)
 		}
 	}else{
@@ -370,8 +373,19 @@ function game_turn(){
 			$("#bot_log").html("You shouldn't check " + players_list[current_player])
 			return
 		}
-		
-		$("#bot_log").html(players_list[current_player] + " lies for 50%")
-		
+		var name = players_list[ current_player ]
+		var cur_amount = 0
+		for (const [key, value] of Object.entries(player_cards))
+			cur_amount += value
+		var p = players_info[ name ][ "times_lied" ]/players_info[ name ][ "times_checked" ]
+		var confidence = players_info[ name ][ "turns" ]
+		var cur_player_info = ". Player lied in " + p + " of previous " + confidence + " turns and " + players_info[ name ][ "times_checked" ] +  " checks."
+		if (players_info[ name ][ "times_checked" ] == 0)
+			cur_player_info = "."
+		if (stack_height < 8 && cur_amount < initial_amount && confidence > 15 && p > 0.7 && player_board_info[ rank ] + thrown_cards[ rank ] >= 3){
+			$("#bot_log").html("You may want to check " + name + cur_player_info )
+			return
+		}
+		$("#bot_log").html("You shouldn't check " + players_list[current_player] + cur_player_info)
 	}
 }
