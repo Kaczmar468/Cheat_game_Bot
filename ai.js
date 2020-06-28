@@ -118,8 +118,7 @@ function start_game(){
 			players_info[ players_list[ i ] ] = {
 				"turns": 0,
 				"times_checked": 0,
-				"times_lied": 0,
-				"times_was_checking": 0}
+				"times_lied": 0}
 	}else{
 		console.log("players_info_err")
 	}
@@ -184,6 +183,12 @@ function confirm_cards(){
 }
 
 function confirm_check(){
+	players_info[ players_list[ current_player ] ][ "turns" ] += 1
+	if (check >= 1)
+		players_info[ players_list[ current_player ] ][ "times_checked" ] += 1
+	if (check == 2)
+		players_info[ players_list[ current_player ] ][ "times_lied" ] += 1
+
 	current_player = (current_player + 1) % players_list.length
 	$("#player_name").html(players_list[ current_player ])
 	$(".checking_div").css({"background-color":bot_color(),"color":"white"})
@@ -217,8 +222,10 @@ function checking_inp(num){
 
 function game_turn(){
 	if (players_list[current_player] == "You"){
+		// THROWNIG
 		$("#bot_log").html("You should throw 2 cards of rank 6")
 	}else{
+		// CHECKING
 		$("#bot_log").html("You should check the player")
 	}
 }
