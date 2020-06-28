@@ -8,11 +8,11 @@ $("#your_cards_frame").hide()
 
 var players_divs = 1, cards_divs = 0, current_player = 0, players_list;
 var bot = 1;
-var number = 0, rank = 0, cards, check
-var player_cards, thrown_cards 
+var number = 0, rank = 0, cards, check, prev_rank = 2;
+var player_cards, thrown_cards, players_info
 
 bot1()
-//example()
+example()
 
 
 function rules_button(){
@@ -38,7 +38,7 @@ function add_player(){
 
 function add_cards(){
 	var before_content = "<div class='your_cards' id='cards" + cards_divs + "'><p id='cards" + cards_divs + "text' class='nick'>";
-	var after_content = "</p><div class='player_button' onclick='remove_cards(cards" + cards_divs + ")'><p>Remove</p></div><div class='clear_both'></div></div>";
+	var after_content = "</p><div class='player_button' onclick='remove_cards(cards" + cards_divs + ",  &quot;" + rank + "&quot;, " + number + ")'><p>Remove</p></div><div class='clear_both'></div></div>";
 	$("#your_cards").append(before_content + number + " cards of rank " + rank + after_content)
 	cards_divs++
 	player_cards[rank]+=number
@@ -58,27 +58,31 @@ function remove_player(playerid){
 	$(playerid).remove()
 }
 
-function remove_cards(cardsid){
+function remove_cards(cardsid, r_rank, r_number){
 	//console.log(playerid)
 	$(cardsid).remove()
+	player_cards[r_rank] -= r_number
 }
 
 function example(){
+	//remember to add sleep and comments in html
 	$("#input").val("Roma")
 	add_player()
-	$("#input").val("Kuba")
+	$("#input").val("Czes")
 	add_player()
 	$("#input").val("Ala")
 	add_player()
 	start_game()
 	player_cards[3]=2
 	player_cards[7]=3
+	player_cards[8]=2
+	player_cards[10]=2
 	player_cards["K"]=3
-	player_cards[8]=3
+	player_cards["A"]=1
 	all_of_them()
-	number = 2
+	/*number = 2
 	rank = 3
-	confirm_cards()
+	confirm_cards()*/
 }
 
 
@@ -107,6 +111,18 @@ function start_game(){
 	$("#your_cards").html("")
 	player_cards = {2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, "J": 0, "Q": 0, "K": 0, "A": 0}
 	thrown_cards = {2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, "J": 0, "Q": 0, "K": 0, "A": 0}
+	players_info_div = $("#input_info").val()
+	if (players_info_div == ""){
+		players_info = new Object()
+		for (var i = 0; i < players_list.length; i++)
+			players_info[ players_list[ i ] ] = {
+				"turns": 0,
+				"times_checked": 0,
+				"times_lied": 0,
+				"times_was_checking": 0}
+	}else{
+		console.log("players_info_err")
+	}
 }
 
 function end_game(){
@@ -164,18 +180,19 @@ function confirm_cards(){
 	$(".number_of_cards").css({"background-color":bot_color(),"color":"white"})
 	$(".card_rank").css({"background-color":bot_color(),"color":"white"})
 	thrown_cards[rank]+=number
-	if (players_list[current_player] == "You"){
-		player_cards[rank]-=number
-	}
 	game_turn()
 }
 
 function confirm_check(){
-	$("#turn_check").hide()
-	$("#turn_cards").show()
-	current_player=(current_player+1)%players_list.length
-	$("#player_name").html(players_list[current_player])
+	current_player = (current_player + 1) % players_list.length
+	$("#player_name").html(players_list[ current_player ])
 	$(".checking_div").css({"background-color":bot_color(),"color":"white"})
+	if (players_list[current_player] == "You"){
+		game_turn()
+	}else{
+		$("#turn_check").hide()
+		$("#turn_cards").show()		
+	}
 }
 
 function all_of_them(){
@@ -183,6 +200,12 @@ function all_of_them(){
 	$("#player_frame").show()
 	$("#adding_cards").hide()
 	$("#your_cards_frame").hide()
+	$(".number_of_cards").css({"background-color":bot_color(),"color":"white"})
+	$(".card_rank").css({"background-color":bot_color(),"color":"white"})
+	if (players_list[current_player] == "You"){
+		$("#turn_cards").hide()
+		$("#turn_check").show()
+	}
 }
 
 function checking_inp(num){
@@ -193,5 +216,9 @@ function checking_inp(num){
 }
 
 function game_turn(){
-
+	if (players_list[current_player] == "You"){
+		$("#bot_log").html("You should throw 2 cards of rank 6")
+	}else{
+		$("#bot_log").html("You should check the player")
+	}
 }

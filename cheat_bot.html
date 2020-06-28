@@ -57,7 +57,7 @@
 					<fieldset id="number_frame">
 			  			<legend>Number of cards</legend>
 			  			<div class="grouper">
-				  			<div class="box_button number_of_cards" onclick="number_of_cards()">0</div>
+				  			<!--<div class="box_button number_of_cards" onclick="number_of_cards()">0</div>-->
 				  			<div class="box_button number_of_cards" onclick="number_of_cards()">1</div>
 				  			<div class="box_button number_of_cards" onclick="number_of_cards()">2</div>
 				  			<div class="box_button number_of_cards" onclick="number_of_cards()">3</div>
@@ -135,11 +135,15 @@
 					<div class="player_button" onclick="add_player()"><p>Add player</p></div>
 					<div class="clear_both"></div>
 				</fieldset>
+				<fieldset id="add_players_info">
+		  			<legend>Add players info</legend>
+					<textarea type="text" cols="40" rows="5" id="input_info" placeholder="Paste here output data of one of your last games. If you don't have any, leave this field empty."></textarea>
+				</fieldset>
 			</div>
   		</fieldset>
 	</main>
 	<footer>
-		<a href="https://github.com/Kaczmar468/Cheat_game_Bot" target="_blank">Author: Jakub Kaczmarek</a>
+		<a href="https://github.com/Kaczmar468/Cheat_game_Bot" target="_blank">Author: Jakub Kaczmarek 2020</a>
 	</footer>
 </body>
 	<script src="jquery-3.5.1.min.js"></script>
