@@ -12,7 +12,7 @@ var number = 0, rank = 0, cards, check = 0, prev_rank = 2, stack_height = 0, ini
 var player_cards, thrown_cards, players_info = new Object(), player_board_info
 
 bot1()
-example()
+//example()
 
 function rules_button(){
 	$("#rules").toggle()
