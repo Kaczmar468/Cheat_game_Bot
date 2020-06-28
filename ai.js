@@ -9,7 +9,7 @@ $("#your_cards_frame").hide()
 var players_divs = 1, cards_divs = 0, current_player = 0, players_list;
 var bot = 1;
 var number = 0, rank = 0, cards, check = 0, prev_rank = 2;
-var player_cards, thrown_cards, players_info, player_board_info
+var player_cards, thrown_cards, players_info = new Object(), player_board_info
 
 bot1()
 //example()
@@ -126,14 +126,30 @@ function start_game(){
 	thrown_cards = {2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, "J": 0, "Q": 0, "K": 0, "A": 0}
 	players_info_div = $("#input_info").val()
 	if (players_info_div == ""){
-		players_info = new Object()
 		for (var i = 0; i < players_list.length; i++)
 			players_info[ players_list[ i ] ] = {
 				"turns": 0,
 				"times_checked": 0,
 				"times_lied": 0}
 	}else{
-		console.log("players_info_err")
+		var input_data = $("#input_info").val().split(";")
+		for (var piece of input_data){
+			piece = piece.split(":")
+			name = piece[0]
+			piece = piece[1].split(",")
+			players_info[name] = new Object()
+			for (var attr of piece){
+				var splitted = attr.split(".")
+				console.log(players_info, name, attr)
+				players_info[name][splitted[0]] = parseInt(splitted[1])
+			}
+		}
+		for (var i = 0; i < players_list.length; i++)
+			if (! (players_list[ i ] in players_info))
+				players_info[ players_list[ i ] ] = {
+					"turns": 0,
+					"times_checked": 0,
+					"times_lied": 0}
 	}
 	prev_rank = 2
 	check = 0
@@ -153,9 +169,9 @@ function end_game(){
 		for (const [key, value] of Object.entries(info)){
 			players_info_formatted += key + "." + value + "," 
 		}
-		players_info_formatted += ";"
+		players_info_formatted = players_info_formatted.substr(0,players_info_formatted.length-1) + ";"
 	}
-	$("#input_info").val(players_info_formatted)
+	$("#input_info").val(players_info_formatted.substr(0,players_info_formatted.length-1))
 }
 
 function bot_color_set(){
